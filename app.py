@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, escape, request, Response
 import random
+import hashlib
 
 app = Flask(__name__)
 
@@ -25,10 +26,10 @@ def json_response():
 
 @app.route('/md5/<string:word>')
 def MD5(word):
-	import hashlib
+
 	hash_obj = hashlib.md5(word.encode())
-	
-	
+	return jsonify(input=word, output=hash_obj.hexdigest())
+
 
 @app.route('/factorial/<int:n>')
 def IsFactorial(n):
@@ -42,8 +43,7 @@ def IsFactorial(n):
 		for i in range(1, n+1):
 			factorial = factorial*i
 		return jsonify(input=n, output=factorial)
-
-			    
+ 
 
 
 @app.route('/cat')
