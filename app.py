@@ -17,7 +17,12 @@ def prime_check(n):
 def json_response():
 	return jsonify(foo='bar', bat ='baz')
 
-
+@app.route('/md5/<string:word>')
+def MD5(word):
+	import hashlib
+	hash_obj = hashlib.md5(word.encode())
+	
+	
 
 @app.route('/factorial/<int:n>')
 def IsFactorial(n):
@@ -32,6 +37,7 @@ def IsFactorial(n):
 			factorial = factorial*i
 		return jsonify(input=n, output=factorial)
 
+			    
 
 
 @app.route('/cat')
