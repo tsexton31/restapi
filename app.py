@@ -9,8 +9,14 @@ def hello():
 
 @app.route('/is-prime/<int:n>')
 def prime_check(n):
-	if(n == 1):
-		return f"The number {n} is prime"
+	if(n < 0):
+		return f"Enter a positive non-zero integer"
+	else:
+		for i in range(2, n):
+			if(n % i) == 0:
+				return jsonify(input=n, output=False)
+			else:
+				return jsonify(input=n, output=True)
 
 
 @app.route('/json')
@@ -25,8 +31,8 @@ def IsFactorial(n):
 	factorial = 1
 	if(n <= 0):
 		return f"The number {n} is not a positive integer"
-	elif(n = 0):
-		return jsonify(input=n, output='1'
+	elif(n == 0):
+		return jsonify(input=n, output='1')
 	else:
 		for i in range(1, n+1):
 			factorial = factorial*i
