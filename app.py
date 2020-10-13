@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
-	return "Howdy,\nPossible extensions are /md5/<string>\n/factorial/<int>\n/fibonacci/<int>\n/is-prime/<int>\n/slack-alert/<string>"
+	return "Howdy,Possible extensions are   /md5/string   /factorial/int   /fibonacci/int   /is-prime/int   /slack-alert/string"
 
 @app.route('/is-prime/<int:n>')
 def prime_check(n):
