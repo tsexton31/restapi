@@ -89,8 +89,8 @@ def slack_post(msg):
     #slck_msg = {'text': msg}
     #requests.post(web_hook_url,data=json.dumps(slck_msg))
     #return 'Done'
-	response = SLACK_APP.chat_postMessage(channel='#group-4', text=message)
-	return jsonify(input=message, output=response["ok"])
+	response = SLACK_APP.chat_postMessage(channel='#group-5', text=msg)
+	return jsonify(input=msg, output=response["ok"])
 		
 
 
