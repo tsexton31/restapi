@@ -5,7 +5,8 @@ import os
 from slack import WebClient
 
 
-SLACK_APP = WebClient(<your Slack App key>)
+SLACK_APP = WebClient(<A01CJ2KJMV3>)
+#or 73266387591.1426087633989
 
 
 app = Flask(__name__)
