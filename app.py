@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, escape, request, Response
 import random
 import hashlib
-import os 
-from slack import WebClient
+import os
+import requests
+#import pyslack
+#from slack import WebClient
 
 
-SLACK_APP = WebClient(A01CJ2KJMV3)
+#SLACK_APP = WebClient(A01CJ2KJMV3)
 #or 73266387591.1426087633989
 
 
@@ -54,8 +56,7 @@ def IsFactorial(n):
 	else:
 		for i in range(1, n+1):
 			factorial = factorial*i
-		return jsonify(input=n, output=factorial)
- 
+		return jsonify(input=n, output=factorial) 
 
 @app.route("/fibonacci/<int:n>")
 def fibonacci_num(n):
@@ -82,21 +83,27 @@ def fibonacci_num(n):
 	return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/slack-alert/<string:msg>')
-def slack_post(msg):
-	data = { 'text' : msg }
-	resp = requests.post{SLACK_URL, json=data}
+@app.route('/slack-alert/<string:msg>')​
+def post_to_slack(msg):
+	SLACK_URL = 'https://hooks.slack.com/services/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'
+	# build the dictionary that will be used as the json payload
+	data = { 'text': msg }
+	# make an HTTP request using POST to the Slack URL 
+	resp = requests.post(SLACK_URL, json=data)
+	# the status code that is returned from Slack tells us what happened
 	if resp.status_code == 200:
-		result = True
-		mesg = "Message successfully posted to Slack channel"
+        	result = True
+        	mesg = "Message successfully posted to Slack channel"
 	else:
-		result = false
-		mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
+        	result = False
+        	mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
+​
 	return jsonify(
-		input=msg,
-		message=mesg,
-		output=result
-	), 200 if resp.status_code==200 else 400
+        	input=msg,
+        	output=result,
+        	message=mesg
+
+
     #patch-7
     #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
@@ -104,7 +111,7 @@ def slack_post(msg):
     #return 'Done'
 	#response = SLACK_APP.chat_postMessage(channel='#group_5', text=message)
 	#return jsonify(input=message, output=response["ok"])
-		
+
 
 
 if __name__ == "__main__":
