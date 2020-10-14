@@ -13,6 +13,9 @@ def prime_check(n):
 	n = int(n)
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
+	elif:
+		if(n = 1 or n = 2):
+			return jsonify(input=n, output=True) 
 	else:
 		for i in range(2, n):
 			if(n % i) == 0:
