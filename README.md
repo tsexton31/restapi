@@ -1,6 +1,6 @@
 # Project 5 by Group 5
 
-For this project, go to localhost:5000/json and add one of the following URL extensions based on what you want:
+For this project, go to localhost:5000 and add one of the following URL extensions based on what you want:
 
 /md5/(input string)
 
