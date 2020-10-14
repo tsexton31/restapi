@@ -8,8 +8,9 @@ app = Flask(__name__)
 def hello():
 	return "Howdy,Possible extensions are   /md5/string   /factorial/int   /fibonacci/int   /is-prime/int   /slack-alert/string"
 
-@app.route('/is-prime/<int:n>')
+@app.route('/is-prime/<string:n>')
 def prime_check(n):
+	n = int(n)
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
 	else:
@@ -20,10 +21,6 @@ def prime_check(n):
 				return jsonify(input=n, output=True)
 
 
-@app.route('/json')
-def json_response():
-	return jsonify(foo='bar', bat ='baz')
-
 @app.route('/md5/<string:word>')
 def MD5(word):
 
@@ -31,8 +28,9 @@ def MD5(word):
 	return jsonify(input=word, output=hash_obj.hexdigest())
 
 
-@app.route('/factorial/<int:n>')
+@app.route('/factorial/<string:n>')
 def IsFactorial(n):
+	n = int(n)
 
 	factorial = 1
 	if(n <= 0):
@@ -45,8 +43,9 @@ def IsFactorial(n):
 		return jsonify(input=n, output=factorial)
  
 
-@app.route("/fibonacci/<int:n>")
+@app.route("/fibonacci/<string:n>")
 def fibonacci_num(n):
+    n = int(n)
     fibonacci = []
     c1 = 0
     c2 = 1
@@ -69,10 +68,9 @@ def fibonacci_num(n):
     return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/cat')
-def random_cat():
-	#solve some problem
-	return
+@app.route('/slack-alert/<string:n>')
+def slackAlert():
+	#solve some pr	return
 
 
 if __name__ == "__main__":
