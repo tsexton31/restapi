@@ -56,10 +56,9 @@ def IsFactorial(n):
 		return jsonify(input=n, output=factorial)
  
 
-@app.route("/fibonacci/<string:n>")
+@app.route("/fibonacci/<int:n>")
 def fibonacci_num(n):
-    n = int(n)
-    fibonacci = []
+    fibonacci = [0]
     c1 = 0
     c2 = 1
     fib = 0
@@ -83,6 +82,7 @@ def fibonacci_num(n):
 
 @app.route('/slack-alert/<msg>')
 def slack_post(msg):
+    #patch-7
     #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
     #requests.post(web_hook_url,data=json.dumps(slck_msg))
