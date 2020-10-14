@@ -14,8 +14,11 @@ def prime_check(n):
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
 	elif:
-		if(n = 1 or n = 2):
+		if(n = 2):
 			return jsonify(input=n, output=True) 
+	elif:
+		if(n = 1):
+			return jsonify(input=n, output=False) 
 	else:
 		for i in range(2, n):
 			if(n % i) == 0:
@@ -36,7 +39,9 @@ def IsFactorial(n):
 	n = int(n)
 
 	factorial = 1
-	if(n < 0):
+	if( isinstance(n,str) == True):
+		return "This is not a number"
+	elif(n < 0):
 		return f"The number {n} is not a positive integer"
 	elif(n == 0):
 		return jsonify(input=n, output='1')
