@@ -68,7 +68,7 @@ def fibonacci_num(n):
     return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/slack/<msg>')
+@app.route('/slack-alert/<msg>')
 def slack_post(msg):
     web_hook_url = 'https://hooks.slack.com/services/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'
     slck_msg = {'text': msg}
