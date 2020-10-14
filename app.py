@@ -8,15 +8,15 @@ app = Flask(__name__)
 def hello():
 	return "Howdy and welcome to Group 5's API. Possible extensions are   /md5/string   /factorial/int   /fibonacci/int   /is-prime/int   /slack-alert/string"
 
-@app.route('/is-prime/<string:n>')
+@app.route('/is-prime/<int:n>')
 def prime_check(n):
-	n = int(n)
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
-
-	elif(n = 2):
+	elif:
+		if(n = 2):
 			return jsonify(input=n, output=True) 
-	elif(n = 1):
+	elif:
+		if(n = 1):
 			return jsonify(input=n, output=False) 
 	else:
 		for i in range(2, n):
@@ -33,9 +33,8 @@ def MD5(word):
 	return jsonify(input=word, output=hash_obj.hexdigest())
 
 
-@app.route('/factorial/<string:n>')
+@app.route('/factorial/<int:n>')
 def IsFactorial(n):
-	n = int(n)
 
 	factorial = 1
 	if( isinstance(n,str) == True):
@@ -75,7 +74,7 @@ def fibonacci_num(n):
     return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/slack-alert/<msg>')
+@app.route('/slack-alert/<string:msg>')
 def slack_post(channel_id, message):
     #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
