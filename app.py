@@ -33,7 +33,7 @@ def IsFactorial(n):
 	n = int(n)
 
 	factorial = 1
-	if(n <= 0):
+	if(n < 0):
 		return f"The number {n} is not a positive integer"
 	elif(n == 0):
 		return jsonify(input=n, output='1')
