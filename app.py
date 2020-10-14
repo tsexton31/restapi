@@ -14,15 +14,17 @@ app = Flask(__name__)
 def hello():
 	return "Howdy and welcome to Group 5's API. Possible extensions are   /md5/string   /factorial/int   /fibonacci/int   /is-prime/int   /slack-alert/string"
 
-@app.route('/is-prime/<string:n>')
+@app.route('/is-prime/<int:n>')
 def prime_check(n):
 	n = int(n)
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
 
-	elif(n = 2):
+	elif:
+		if(n == 2):
 			return jsonify(input=n, output=True) 
-	elif(n = 1):
+	elif:
+		if(n == 1):
 			return jsonify(input=n, output=False) 
 	else:
 		for i in range(2, n):
