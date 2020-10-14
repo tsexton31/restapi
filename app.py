@@ -13,10 +13,11 @@ def prime_check(n):
 	n = int(n)
 	if(n < 0):
 		return f"Enter a positive non-zero integer"
-
-	elif(n = 2):
+	elif:
+		if(n = 2):
 			return jsonify(input=n, output=True) 
-	elif(n = 1):
+	elif:
+		if(n = 1):
 			return jsonify(input=n, output=False) 
 	else:
 		for i in range(2, n):
@@ -76,15 +77,15 @@ def fibonacci_num(n):
 
 
 @app.route('/slack-alert/<msg>')
-def slack_post(channel_id, message):
+def slack_post(msg):
     #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
     #requests.post(web_hook_url,data=json.dumps(slck_msg))
     #return 'Done'
 	slack_client.api_call(
         "chat.postMessage",
-        channel=channel_id,
-        text=message,
+        channel="testing-day",
+        text=msg,
         username='pythonbot',
         icon_emoji=':robot_face:'
     )
