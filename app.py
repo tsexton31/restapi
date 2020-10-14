@@ -82,15 +82,28 @@ def fibonacci_num(n):
 	return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/slack-alert/<msg>')
+@app.route('/slack-alert/<string:msg>')
 def slack_post(msg):
+	data = { 'text' : msg }
+	resp = requests.post{SLACK_URL, json=data}
+	if resp.status_code == 200:
+		result = True
+		mesg = "Message successfully posted to Slack channel"
+	else:
+		result = false
+		mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
+	return jsonify(
+		input=msg,
+		message=mesg,
+		output=result
+	), 200 if resp.status_code==200 else 400
     #patch-7
     #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
     #requests.post(web_hook_url,data=json.dumps(slck_msg))
     #return 'Done'
-	response = SLACK_APP.chat_postMessage(channel='#group-5', text=msg)
-	return jsonify(input=msg, output=response["ok"])
+	#response = SLACK_APP.chat_postMessage(channel='#group_5', text=message)
+	#return jsonify(input=message, output=response["ok"])
 		
 
 
