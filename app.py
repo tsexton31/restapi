@@ -65,8 +65,10 @@ def fibonacci_num(n):
     c2 = 1
     fib = 0
     check = 0
-
-    if n < 0:
+    if( isinstance(n,str) == True):
+		return "This is not a number"
+    elif n < 0:
+	
         return jsonify(input=n, output="Error: Input must be a positive integer")
     elif n == 0:
         fibonacci = [0]
