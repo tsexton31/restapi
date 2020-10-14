@@ -1,6 +1,12 @@
 from flask import Flask, jsonify, escape, request, Response
 import random
 import hashlib
+import os 
+from slack import WebClient
+
+
+SLACK_APP = WebClient(<your Slack App key>)
+
 
 app = Flask(__name__)
 
@@ -76,10 +82,14 @@ def fibonacci_num(n):
 
 @app.route('/slack-alert/<msg>')
 def slack_post(msg):
-    web_hook_url = 'https://hooks.slack.com/services/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'
-    slck_msg = {'text': msg}
-    requests.post(web_hook_url,data=json.dumps(slck_msg))
-    return 'Done'
+    #patch-7
+    #web_hook_url = 'https://hooks.slack.com/services/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'
+    #slck_msg = {'text': msg}
+    #requests.post(web_hook_url,data=json.dumps(slck_msg))
+    #return 'Done'
+	response = SLACK_APP.chat_postMessage(channel='#group-4', text=message)
+    return jsonify(input=message, output=response["ok"])
+		
 
 
 if __name__ == "__main__":
