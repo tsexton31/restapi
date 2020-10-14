@@ -42,7 +42,7 @@ def MD5(word):
 	return jsonify(input=word, output=hash_obj.hexdigest())
 
 
-@app.route('/factorial/<string:n>')
+@app.route('/factorial/<int:n>')
 def IsFactorial(n):
 	n = int(n)
 
@@ -83,12 +83,12 @@ def fibonacci_num(n):
 	return jsonify(input=n, output=fibonacci)
 
 
-@app.route('/slack-alert/<string:msg>')​
+@app.route('/slack-alert/<string:msg>')
 def post_to_slack(msg):
 	SLACK_URL = 'https://hooks.slack.com/services/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'
 	# build the dictionary that will be used as the json payload
 	data = { 'text': msg }
-	# make an HTTP request using POST to the Slack URL 
+	# make an HTTP request using POST to the Slack URL
 	resp = requests.post(SLACK_URL, json=data)
 	# the status code that is returned from Slack tells us what happened
 	if resp.status_code == 200:
@@ -97,11 +97,11 @@ def post_to_slack(msg):
 	else:
         	result = False
         	mesg = "There was a problem posting to the Slack channel (HTTP response: " + str(resp.status_code) + ")."
-​
 	return jsonify(
         	input=msg,
         	output=result,
         	message=mesg
+        ), 200 if resp.status_code==200 else 400
 
 
     #patch-7
