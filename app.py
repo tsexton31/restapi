@@ -100,7 +100,7 @@ def post_to_slack(msg):
 
 
     #patch-7
-    #web_hook_url = 'https://hooks.slack.com/services/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'
+    #web_hook_url = 'https://hooks.slack.com/services/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'
     #slck_msg = {'text': msg}
     #requests.post(web_hook_url,data=json.dumps(slck_msg))
     #return 'Done'
