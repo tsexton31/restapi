@@ -11,3 +11,11 @@ For this project, go to localhost:5000 and add one of the following URL extensio
 /is-prime/(input int)
 
 /slack-alert/(input string)
+
+POST /keyval
+
+GET /keyval/<string>
+  
+PUT /keyval
+
+DELETE /keyval/<string>
