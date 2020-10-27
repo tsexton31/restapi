@@ -99,8 +99,16 @@ def post_to_slack(msg):
         ), 200 if resp.status_code==200 else 400
 
 
+def post():
+
+	
+def get():
 
 
+def put():
+	
+
+def delete():
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port = 5000)
