@@ -14,6 +14,11 @@ from sqlalchemy.orm import *
 #import pyslack
 #from slack import WebClient
 
+#There are a couple values that are set to "sqlite"(lines 83 & 104) that i am not sure what to replace with. With "redis"??
+
+
+
+
 
 Base = redis.Redis(host='hostname', port=80, password='password')
 #hostname will probably need to be changed 
