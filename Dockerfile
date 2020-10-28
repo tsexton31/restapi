@@ -38,7 +38,7 @@ RUN redis-cli
 #RUN redis-cli ping
 
 #If the previous docker run command returns an invalid reference format error, try removing the -name tag or use the redis:latest command to pull from the latest image
-#RUN docker run -p 6379:6379/tcp -d redis:latest
+#RUN docker run -p 5000:5000/tcp -d redis:latest (port originally 6379:6379)
 #Idk if the last 2 are needed but i put them just in case
 
 
