@@ -54,13 +54,11 @@ class KeyValueDatabaseInterface(object):
 		self.session = sessionmaker(bind=db_engine)()
 
 	def _convert_to_supported_type(self, value):
-	"""
-	Private function that converts a value to bytes so that it can be inserted as a blob in the database.
-	:param value: the value to be converted to bytes
-	:return: value
-	:rtype: bytes
-        """
-
+		"""
+		Private function that converts a value to bytes so that it can be inserted as a blob in the database.
+		:param value: the value to be converted to bytes
+		:return: value
+		:rtype: bytes"""
 		if issubclass(type(value), ProtocolBufferMessage):
         		value = value.SerializeToString()
 		if type(value) is str:
@@ -108,16 +106,16 @@ class KeyValueDatabaseInterface(object):
 			db_credentials = ''
 
 		return '%s%s://%s%s%s/%s.db' % (db_dialect, db_driver, db_credentials, hostname, port, db_name)
-	
+
 	def post(self, key, value):
-        """
-        Insert a single entry into the database.
-        :param key: The key for the entry.
-        :type key: string
-        :param value: The associated value.
-        :return: True is the insertion was successful; False otherwise.
-        :rtype: bool
-        """
+		"""
+		Insert a single entry into the database.
+		:param key: The key for the entry.
+		:type key: string
+		:param value: The associated value.
+		:return: True is the insertion was successful; False otherwise.
+		:rtype: bool
+		"""
 		try:
 			self.session.add(KeyValue(key, self._convert_to_supported_type(value)))
 			self.session.commit()
@@ -125,35 +123,34 @@ class KeyValueDatabaseInterface(object):
             		self.session.rollback()
             		print("Exception encountered %s" % e.with_traceback(sys.exc_info()[2]))
             		return False
-        	return True
+		return True
 	def get(self, key):
-        """
-        Returns the entry associated with the key.
-        :param key: the key of the entry to be retrieved from the database
-        :type key: string
-        :return: entry associated with that key
-        :rtype: KeyValue
-        """
+		"""
+		Returns the entry associated with the key.
+		:param key: the key of the entry to be retrieved from the database
+		:type key: string
+		:return: entry associated with that key
+		:rtype: KeyValue"""
 		return self.session.query(KeyValue).filter(KeyValue.key == key).first()
 
 	def put(self, key, value):
-        """
-        Updates the entry associated with the key with the value provided.
-        :param key: the entry's key
-        :param value: the new value of the entry
-        :return: void
-        """
+		"""
+		Updates the entry associated with the key with the value provided.
+		:param key: the entry's key
+		:param value: the new value of the entry
+		:return: void
+		"""
 		kv_entry = self.get(key)
 		kv_entry.value = self._convert_to_supported_type(value)
 		self.session.commit()
 
 	def delete(self, keys):
-        """
-        Remove the entries associate with the keys provided.
-        :param keys: The keys of the entries to remove
-        :type keys: List<string>
-        :return: void
-        """
+		"""
+		Remove the entries associate with the keys provided.
+		:param keys: The keys of the entries to remove
+		:type keys: List<string>
+		:return: void
+		"""
 		if type(keys) is not list:
 			raise TypeError("A list of keys is expected. Got %s instead." % str(type(keys)))
 		for kv_entry in self.get_multiple(keys):
@@ -162,8 +159,6 @@ class KeyValueDatabaseInterface(object):
 
 
 
-	
-	
 @app.route('/')
 def hello():
 	return "Howdy and welcome to Group 5's API. Possible extensions are   /md5/string   /factorial/int   /fibonacci/int   /is-prime/int   /slack-alert/string"
