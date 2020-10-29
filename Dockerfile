@@ -23,7 +23,9 @@ RUN docker run --name redis_cont    \
     bitnami/redis:latest
     
 #Bind the redis port when running docker (port was originally 6379:6379)
+
 RUN docker run -p 80:80 –name redis_cont -d redis
+#RUN docker run -p 6379:6379 –name redis_cont -d redis
 
 #bind a local volume for persistent redis data (port originally 6379:6379)
 RUN docker run -p 80:80 -d                  \
