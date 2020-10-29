@@ -37,11 +37,12 @@ def post(key, value):
 	#using as an example
 	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
 	if exists(key) is not None: 
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
+		response = make_response(jsonify(kv_key = key,kv_value = value, Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409 Key already exist"))
 	else:	
 		r.set(key, value)
-		response = make_response(jsonify({"kv_key":str(r.key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
+		response = make_response(jsonify(kv_key =key, kv_value = value,Status_codes ="- 200 Success"))  
 	return response
+
 @app.route('/keyval/<string:key>')
 def get(key):
 	"""
@@ -50,12 +51,11 @@ def get(key):
 	:type key: string
 	:return: entry associated with that key
 	:rtype: KeyValue"""
-	if isinstnace(key, str) == True:
-		status_code = "200"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	if exists(key) is not None:
+		response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
 	else
-		status_code = "400"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
+		
+		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
 @app.route('/keyval')
@@ -66,10 +66,12 @@ def put(key, value):
 	:param value: the new value of the entry
 	:return: void
 	"""
-	r.delete(key)
-	r.set(key, value)
-	
-	response = make_response(jsonify(kv_value =str(r.get(key)), Status_codes = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409) )
+	if exists(key) is not None:
+		r.delete(key)
+		r.set(key, value)
+		response = make_response(jsonify(kv_key = key, kv_value = value,Status_codes ="- 200 Success"))
+	else:
+		response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
 @app.route('/keyval/<string:key>')
@@ -81,13 +83,12 @@ def delete(key):
 	:return: void
 	"""
 
-	if isinstnace(key, str) == True:
+	if exists(key) is not None:
 		r.delete(key)
-		status_code = "200"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+		response = make_response(jsonify(kv_key = " ", kv_value =" ",Status_codes ="- 200 Success"))
 	else
-		status_code = "400"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
+		
+		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
 
