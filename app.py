@@ -74,7 +74,7 @@ def put(key, value):
 		response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
-@app.route('/keyval/<string:key>'methods = ['DELETE'])
+@app.route('/keyval/<string:key>',methods = ['DELETE'])
 def delete(key):
 	"""
 	Remove the entries associate with the keys provided.
