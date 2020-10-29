@@ -33,11 +33,14 @@ def post(key, value):
 	:return: True is the insertion was successful; False otherwise.
 	:rtype: bool
 	"""
-	r.set(key, value)
+	
 	#using as an example
 	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
-	
-	response = make_response(jsonify({"kv_key":str(r.key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
+	if exists(key) is not None: 
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
+	else:	
+		r.set(key, value)
+		response = make_response(jsonify({"kv_key":str(r.key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
 	return response
 @app.route('/keyval/<string:key>')
 def get(key):
@@ -65,8 +68,8 @@ def put(key, value):
 	"""
 	r.delete(key)
 	r.set(key, value)
-	status_code = "200"
-	response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	
+	response = make_response(jsonify(kv_value =str(r.get(key)), Status_codes = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409) )
 	return response
 
 @app.route('/keyval/<string:key>')
