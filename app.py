@@ -13,7 +13,6 @@ import redis
 #import pyslack
 #from slack import WebClient
 
-#There are a couple values that are set to "sqlite"(lines 83 & 104) that i am not sure what to replace with. With "redis"??
 
 
 
@@ -53,7 +52,7 @@ def get(key):
 		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
 	else
 		status_code = "400"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
 	return response
 
 @app.route('/keyval')
@@ -85,7 +84,7 @@ def delete(key):
 		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
 	else
 		status_code = "400"
-		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),400, )
 	return response
 
 
