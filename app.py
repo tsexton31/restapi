@@ -18,7 +18,7 @@ import redis
 
 
 
-r = redis.Redis(host='34.121.17.49', port=6379, password = "password")
+r = redis.Redis(host='34.121.17.49', port=80, password = "password")
 #hostname needs to be changed to the IP of the host machine
 status_code = " "
 app = Flask(__name__)
