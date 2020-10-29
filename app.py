@@ -23,7 +23,7 @@ r = redis.Redis(host='34.121.17.49', port=6379, password = "password")
 status_code = " "
 app = Flask(__name__)
 
-@app.route('POST /keyval')
+@app.route('/keyval', methods = ['POST'])
 def post(key, value):
 	"""
 	Insert a single entry into the database.
@@ -43,7 +43,7 @@ def post(key, value):
 		response = make_response(jsonify(kv_key =key, kv_value = value,Status_codes ="- 200 Success"))  
 	return response
 
-@app.route('GET /keyval/<string:key>')
+@app.route('/keyval/<string:key>', methods = ['GET'])
 def get(key):
 	"""
 	Returns the entry associated with the key.
@@ -58,7 +58,7 @@ def get(key):
 		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
-@app.route('PUT /keyval')
+@app.route('/keyval',methods = ['PUT'])
 def put(key, value):
 	"""
 	Updates the entry associated with the key with the value provided.
@@ -74,7 +74,7 @@ def put(key, value):
 		response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
 
-@app.route('DELETE /keyval/<string:key>')
+@app.route('/keyval/<string:key>'methods = ['DELETE'])
 def delete(key):
 	"""
 	Remove the entries associate with the keys provided.
