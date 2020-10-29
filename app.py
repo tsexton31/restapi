@@ -86,7 +86,7 @@ def delete(key):
 	if exists(key) is not None:
 		r.delete(key)
 		response = make_response(jsonify(kv_key = " ", kv_value =" ",Status_codes ="- 200 Success"))
-	else
+	else:
 		
 		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
 	return response
