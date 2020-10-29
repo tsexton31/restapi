@@ -40,7 +40,7 @@ def post(key, value):
 	
 	response = make_response(jsonify({"kv_key":str(key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
 	return response
-
+@app.route('/keyval/<string:key>')
 def get(key):
 	"""
 	Returns the entry associated with the key.
@@ -48,7 +48,12 @@ def get(key):
 	:type key: string
 	:return: entry associated with that key
 	:rtype: KeyValue"""
-	response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	if isinstnace(key, str) == True:
+		status_code = "200"
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	else
+		status_code = "400"
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
 	return response
 
 def put(key, value):
