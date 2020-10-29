@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, escape, request, Response
+from flask import Flask, jsonify, escape, request, Response, make_response
 import random
 import hashlib
 import os
@@ -9,8 +9,7 @@ import re
 import sys
 from google.protobuf.message import Message as ProtocolBufferMessage
 import argparse
-from sqlalchemy import *
-from sqlalchemy.orm import *
+import redis
 #import pyslack
 #from slack import WebClient
 
@@ -20,142 +19,61 @@ from sqlalchemy.orm import *
 
 
 
-Base = redis.Redis(host='hostname', port=80, password='password')
-#hostname will probably need to be changed 
-
+r = Client(host='34.121.17.49', port=6379, decode_responses=True)
+#hostname needs to be changed to the IP of the host machine
+status_code = " "
 app = Flask(__name__)
 
-class KeyValue(Base):
-    __tablename__ = "kvtable"
-
-    key = Column(String(), nullable=False, unique=True, primary_key=True)
-    value = Column(BLOB, nullable=False)
-
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-
-class KeyValueDatabaseInterface(object):
+@app.route('/keyval')
+def post(key, value):
 	"""
-	An interface class for a simple Key-Value Relational Database. Has several different CRUD methods
+	Insert a single entry into the database.
+	:param key: The key for the entry.
+	:type key: string
+	:param value: The associated value.
+	:return: True is the insertion was successful; False otherwise.
+	:rtype: bool
 	"""
-	def __init__(self, connection_string=None, connection_file=None):
-		conn_string = "sqlite:///kv_db.db"
-		if connection_string is not None:
-			conn_string = connection_string
-		elif connection_file is not None:
-			conn_string = self.get_db_connection_string_from_settings_file()
+	r.set(key, value)
+	#using as an example
+	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
+	
+	response = make_response(jsonify({"kv_key":str(key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
+	return response
 
-		print("Connecting to: %s" % conn_string)
-		db_engine = create_engine(conn_string)
-		Base.metadata.create_all(db_engine)
-		Base.metadata.bind = db_engine
+def get(key):
+	"""
+	Returns the entry associated with the key.
+	:param key: the key of the entry to be retrieved from the database
+	:type key: string
+	:return: entry associated with that key
+	:rtype: KeyValue"""
+	response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	return response
 
-		self.session = sessionmaker(bind=db_engine)()
+def put(key, value):
+	"""
+	Updates the entry associated with the key with the value provided.
+	:param key: the entry's key
+	:param value: the new value of the entry
+	:return: void
+	"""
+	kv_entry = r.get(key)
+	kv_entry.value = self._convert_to_supported_type(value)
+	self.session.commit()
 
-	def _convert_to_supported_type(self, value):
-		"""
-		Private function that converts a value to bytes so that it can be inserted as a blob in the database.
-		:param value: the value to be converted to bytes
-		:return: value
-		:rtype: bytes"""
-		if issubclass(type(value), ProtocolBufferMessage):
-        		value = value.SerializeToString()
-		if type(value) is str:
-			return bytes(value, 'UTF-8')
-		elif type(value) is int:
-			return value.to_bytes(value.bit_length() + 7, byteorder="little")
-		elif type(value) is bytes:
-			return value
-        	# TODO: add more supported formats
-		else:
-			raise TypeError("Type %s is not supported." % str(type(value)))
-
-
-	def get_db_connection_string_from_settings_file(self, filename="settings.json"):
-		json_data = open(filename).read()
-		settings = json.loads(json_data)
-        	# pprint(settings)
-
-        	# dialect+driver://username:password@host:port/database
-		db_dialect = settings['databaseEngine'] if 'databaseEngine' in json_data else 'sqlite'
-		db_driver = "+" + settings['driver'] if 'driver' in json_data else ''
-		db_name = settings['databaseName'] if 'databaseName' in json_data else 'kv_db'
-		db_username = settings['username'] if 'username' in json_data else ''
-		db_password = settings['password'] if 'password' in json_data and len(db_username) > 0 else ''
-		db_credentials = ""
-
-		if len(db_username) > 0:
-			db_credentials += db_username
-			if len(db_password) > 0:
-				db_credentials += ":" + db_password
-			db_credentials += "@"
-		hostname = settings['hostname'] if 'hostname' in json_data else 'localhost'
-
-		port = settings['port'] if 'port' in json_data else None
-
-		if port is not None and (port > 0):
-			port = ":" + re.sub('[^0-9]', '', str(port))
-		else:
-			port = ''
-
-		if db_dialect == 'sqlite':
-			port = ''
-			hostname = ''
-			db_driver = ''
-			db_credentials = ''
-
-		return '%s%s://%s%s%s/%s.db' % (db_dialect, db_driver, db_credentials, hostname, port, db_name)
-
-	def post(self, key, value):
-		"""
-		Insert a single entry into the database.
-		:param key: The key for the entry.
-		:type key: string
-		:param value: The associated value.
-		:return: True is the insertion was successful; False otherwise.
-		:rtype: bool
-		"""
-		try:
-			self.session.add(KeyValue(key, self._convert_to_supported_type(value)))
-			self.session.commit()
-		except Exception as e:
-            		self.session.rollback()
-            		print("Exception encountered %s" % e.with_traceback(sys.exc_info()[2]))
-            		return False
-		return True
-	def get(self, key):
-		"""
-		Returns the entry associated with the key.
-		:param key: the key of the entry to be retrieved from the database
-		:type key: string
-		:return: entry associated with that key
-		:rtype: KeyValue"""
-		return self.session.query(KeyValue).filter(KeyValue.key == key).first()
-
-	def put(self, key, value):
-		"""
-		Updates the entry associated with the key with the value provided.
-		:param key: the entry's key
-		:param value: the new value of the entry
-		:return: void
-		"""
-		kv_entry = self.get(key)
-		kv_entry.value = self._convert_to_supported_type(value)
-		self.session.commit()
-
-	def delete(self, keys):
-		"""
-		Remove the entries associate with the keys provided.
-		:param keys: The keys of the entries to remove
-		:type keys: List<string>
-		:return: void
-		"""
-		if type(keys) is not list:
-			raise TypeError("A list of keys is expected. Got %s instead." % str(type(keys)))
-		for kv_entry in self.get_multiple(keys):
-			self.session.delete(kv_entry)
-		self.session.commit()
+def delete(self, keys):
+	"""
+	Remove the entries associate with the keys provided.
+	:param keys: The keys of the entries to remove
+	:type keys: List<string>
+	:return: void
+	"""
+	if type(keys) is not list:
+		raise TypeError("A list of keys is expected. Got %s instead." % str(type(keys)))
+	for kv_entry in self.get_multiple(keys):
+		self.session.delete(kv_entry)
+	self.session.commit()
 
 
 
