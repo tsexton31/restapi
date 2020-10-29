@@ -19,7 +19,7 @@ import redis
 
 
 
-r = Client(host='34.121.17.49', port=6379, decode_responses=True)
+r = redis.Redis(host='34.121.17.49', port=6379, decode_responses=True)
 #hostname needs to be changed to the IP of the host machine
 status_code = " "
 app = Flask(__name__)
@@ -38,7 +38,7 @@ def post(key, value):
 	#using as an example
 	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
 	
-	response = make_response(jsonify({"kv_key":str(key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
+	response = make_response(jsonify({"kv_key":str(r.key),"kv_value":str(value),"Status_codes": str(status_code)}) ),200, )
 	return response
 @app.route('/keyval/<string:key>')
 def get(key):
@@ -56,6 +56,7 @@ def get(key):
 		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
 	return response
 
+@app.route('/keyval')
 def put(key, value):
 	"""
 	Updates the entry associated with the key with the value provided.
@@ -63,23 +64,29 @@ def put(key, value):
 	:param value: the new value of the entry
 	:return: void
 	"""
-	kv_entry = r.get(key)
-	kv_entry.value = self._convert_to_supported_type(value)
-	self.session.commit()
+	r.delete(key)
+	r.set(key, value)
+	status_code = "200"
+	response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	return response
 
-def delete(self, keys):
+@app.route('/keyval/<string:key>')
+def delete(key):
 	"""
 	Remove the entries associate with the keys provided.
 	:param keys: The keys of the entries to remove
 	:type keys: List<string>
 	:return: void
 	"""
-	if type(keys) is not list:
-		raise TypeError("A list of keys is expected. Got %s instead." % str(type(keys)))
-	for kv_entry in self.get_multiple(keys):
-		self.session.delete(kv_entry)
-	self.session.commit()
 
+	if isinstnace(key, str) == True:
+		r.delete(key)
+		status_code = "200"
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	else
+		status_code = "400"
+		response = make_response(jsonify({"kv_value":str(r.get(key)),"Status_codes": str(status_code)}) ),200, )
+	return response
 
 
 @app.route('/')
