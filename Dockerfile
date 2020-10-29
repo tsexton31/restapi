@@ -26,7 +26,7 @@ RUN docker run --name redis_cont    \
 RUN docker run -p 5000:5000 –name redis_cont -d redis
 
 #bind a local volume for persistent redis data (port originally 6379:6379)
-RUN docker run -p 5000:5000 -d                  \
+RUN docker run -p 80:80 -d                  \
     -v $PWD/redis-data:/bitnami/redis/data  \
     --name redis_cont                       \
     bitnami/redis:latest # <-- Redis image
