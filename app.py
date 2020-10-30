@@ -23,7 +23,7 @@ r = redis.Redis(host='34.121.17.49', port=80, password = "password")
 status_code = " "
 app = Flask(__name__)
 
-@app.route('/keyval', methods = ['POST'])
+@app.route('/keyval/<string:key>/<value>', methods = ['POST'])
 def post(key, value):
 	"""
 	Insert a single entry into the database.
@@ -62,7 +62,7 @@ def get(key):
 		response = make_response(jsonify(kv_key = key,kv_value = " "))
 	return response
 
-@app.route('/keyval',methods = ['PUT'])
+@app.route('/keyval/<string:key>/<value>',methods = ['PUT'])
 def put(key, value):
 	"""
 	Updates the entry associated with the key with the value provided.
