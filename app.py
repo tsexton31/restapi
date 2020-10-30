@@ -9,7 +9,6 @@ import re
 import sys
 from google.protobuf.message import Message as ProtocolBufferMessage
 import argparse
-import redis
 #import pyslack
 #from slack import WebClient
 
@@ -18,7 +17,7 @@ import redis
 
 
 
-r = redis.Redis(host='34.121.17.49', port=80, password = "password")
+#r = redis.Redis(host='34.121.17.49', port=80, password = "password")
 #hostname needs to be changed to the IP of the host machine
 status_code = " "
 app = Flask(__name__)
@@ -33,10 +32,10 @@ def post(key, value):
 	:return: True is the insertion was successful; False otherwise.
 	:rtype: bool
 	"""
-	
+
 	#using as an example
 	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
-	if exists(key) is not None: 
+	if REDIS.exists(key)
 		#response = make_response(jsonify(kv_key = key,kv_value = value, Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409 Key already exist"))
 		response = make_response(jsonify(kv_key = key,kv_value = value),409, )
 	else:	
