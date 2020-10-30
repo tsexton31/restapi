@@ -23,7 +23,7 @@ r = redis.Redis(host='34.121.17.49', port=80, password = "password")
 status_code = " "
 app = Flask(__name__)
 
-@app.route('/keyval', methods = ['POST'])
+@app.route('/keyval/<string:key>/<value>', methods = ['POST'])
 def post(key, value):
 	"""
 	Insert a single entry into the database.
@@ -37,10 +37,12 @@ def post(key, value):
 	#using as an example
 	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
 	if exists(key) is not None: 
-		response = make_response(jsonify(kv_key = key,kv_value = value, Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409 Key already exist"))
+		#response = make_response(jsonify(kv_key = key,kv_value = value, Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409 Key already exist"))
+		response = make_response(jsonify(kv_key = key,kv_value = value))
 	else:	
 		r.set(key, value)
-		response = make_response(jsonify(kv_key =key, kv_value = value,Status_codes ="- 200 Success"))  
+		#response = make_response(jsonify(kv_key =key, kv_value = value,Status_codes ="- 200 Success"))  
+		response = make_response(jsonify(kv_key =key, kv_value = value))
 	return response
 
 @app.route('/keyval/<string:key>', methods = ['GET'])
@@ -52,13 +54,15 @@ def get(key):
 	:return: entry associated with that key
 	:rtype: KeyValue"""
 	if exists(key) is not None:
-		response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
+		#response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
+		response = make_response(jsonify(kv_key = key, kv_value =r.get(key))
 	else:
 		
-		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		response = make_response(jsonify(kv_key = key,kv_value = " "))
 	return response
 
-@app.route('/keyval',methods = ['PUT'])
+@app.route('/keyval/<string:key>/<value>',methods = ['PUT'])
 def put(key, value):
 	"""
 	Updates the entry associated with the key with the value provided.
@@ -69,9 +73,11 @@ def put(key, value):
 	if exists(key) is not None:
 		r.delete(key)
 		r.set(key, value)
-		response = make_response(jsonify(kv_key = key, kv_value = value,Status_codes ="- 200 Success"))
+		#response = make_response(jsonify(kv_key = key, kv_value = value,Status_codes ="- 200 Success"))
+		response = make_response(jsonify(kv_key = key, kv_value = value))
 	else:
-		response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		#response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		response = make_response(jsonify(kv_key = key, kv_value = value))
 	return response
 
 @app.route('/keyval/<string:key>',methods = ['DELETE'])
@@ -85,10 +91,12 @@ def delete(key):
 
 	if exists(key) is not None:
 		r.delete(key)
-		response = make_response(jsonify(kv_key = " ", kv_value =" ",Status_codes ="- 200 Success"))
+		#response = make_response(jsonify(kv_key = " ", kv_value =" ",Status_codes ="- 200 Success"))
+		response = make_response(jsonify(kv_key = " ", kv_value =" "))
 	else:
 		
-		response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
+		response = make_response(jsonify(kv_key = key,kv_value = " "))
 	return response
 
 
