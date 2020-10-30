@@ -55,7 +55,7 @@ def get(key):
 	:rtype: KeyValue"""
 	if exists(key) is not None:
 		#response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
-		response = make_response(jsonify(kv_key = key, kv_value =r.get(key))
+		response = make_response(jsonify(kv_key = key, kv_value =r.get(key)))
 	else:
 		
 		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
