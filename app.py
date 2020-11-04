@@ -50,13 +50,13 @@ def get(key):
 	:type key: string
 	:return: entry associated with that key
 	:rtype: KeyValue"""
-	if exists(key) is not None:
+	if REDIS.exists(key):
 		#response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
-		response = make_response(jsonify(kv_key = key, kv_value =r.get(key)),200 , )
+		response = make_response(jsonify(kv_key = key, kv_value =r.get(key)),200)
 	else:
 		
 		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
-		response = make_response(jsonify(kv_key = key,kv_value = " "), 400, )
+		response = make_response(jsonify(kv_key = key, kv_value = " ", result=False, error="Key does not exist"), 400, )
 	return response
 
 @app.route('/keyval/<string:key>/<string:value>',methods = ['PUT'])
