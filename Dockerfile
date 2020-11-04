@@ -12,29 +12,30 @@ COPY . /app
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # Make port 5000 available to the world outside this container
-EXPOSE 80
+EXPOSE 5000
 
 #download the image before building the container 
-RUN docker pull bitnami/redis
+#RUN docker pull bitnami/redis
 
 #allow for the use of an empty password
-RUN docker run --name redis_cont    \
-    -e ALLOW_EMPTY_PASSWORD=yes \
-    bitnami/redis:latest
+#RUN docker run --name redis_cont    \
+#    -e ALLOW_EMPTY_PASSWORD=yes \
+#    bitnami/redis:latest
     
 #Bind the redis port when running docker (port was originally 6379:6379)
 
-RUN docker run -p 80:80 –name redis_cont -d redis
+#RUN docker run -p 80:80 –name redis_cont -d redis
 #RUN docker run -p 6379:6379 –name redis_cont -d redis
 
 #bind a local volume for persistent redis data (port originally 6379:6379)
-RUN docker run -p 80:80 -d                  \
-    -v $PWD/redis-data:/bitnami/redis/data  \
-    --name redis_cont                       \
-    bitnami/redis:latest # <-- Redis image
+#RUN docker run -p 80:80 -d                  \
+#    -v $PWD/redis-data:/bitnami/redis/data  \
+#    --name redis_cont                       \
+#    bitnami/redis:latest 
+# <-- Redis image
 
 #Start redis server.
-RUN redis-cli 
+#RUN redis-cli 
 
 #to confirm it is running
 #RUN redis-cli ping
