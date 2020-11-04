@@ -33,15 +33,13 @@ def post(key, value):
 	:rtype: bool
 	"""
 
-	#using as an example
-	#response = make_response(jsonify({"message": str(FLAMSG_ERR_SEC_ACCESS_DENIED), "severity": "danger"}),401, )	
-	if REDIS.exists(key)
-		#response = make_response(jsonify(kv_key = key,kv_value = value, Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 409 Key already exist"))
-		response = make_response(jsonify(kv_key = key,kv_value = value),409, )
+	#pst_cmd = "POST " + key + "/" + value
+	
+	if REDIS.exists(key):
+		response = make_response(jsonify(kv_key = key, kv_value = value, result=False, error="Key already exists"), 409)
 	else:	
 		r.set(key, value)
-		#response = make_response(jsonify(kv_key =key, kv_value = value,Status_codes ="- 200 Success"))  
-		response = make_response(jsonify(kv_key =key, kv_value = value),200, )
+		response = make_response(jsonify(kv_key =key, kv_value = value, result=True),200)
 	return response
 
 @app.route('/keyval/<string:key>', methods = ['GET'])
