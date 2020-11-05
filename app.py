@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, escape, request, Response, make_response
+from flask import Flask, jsonify, escape, request, Response
 import random
 import hashlib
 import os
@@ -17,8 +17,7 @@ import argparse
 
 
 
-#r = redis.Redis(host='34.121.17.49', port=80, password = "password")
-#hostname needs to be changed to the IP of the host machine
+REDIS = redis.Redis(host='redis-server')
 status_code = " "
 app = Flask(__name__)
 
@@ -35,30 +34,42 @@ def post(key, value):
 
 	#pst_cmd = "POST " + key + "/" + value
 	
+	
 	if REDIS.exists(key):
-		response = make_response(jsonify(kv_key = key, kv_value = value, result=False, error="Key already exists"), 409)
+		response = jsonify(kv_key = key, 
+				   kv_value = value, 
+				   result=False, 
+				   error="Key already exists"), 409
 	else:	
-		r.set(key, value)
+		REDIS.set(key, value)
 		response = make_response(jsonify(kv_key =key, kv_value = value, result=True),200)
 	return response
 
-@app.route('/keyval/<string:key>', methods = ['GET'])
-def get(key):
+@app.route('/keyval/<string:user_key>', methods = ['GET'])
+def get(user_key):
 	"""
 	Returns the entry associated with the key.
 	:param key: the key of the entry to be retrieved from the database
 	:type key: string
 	:return: entry associated with that key
 	:rtype: KeyValue"""
-	if REDIS.exists(key):
-		#response = make_response(jsonify(kv_key = key, kv_value =r.get(key),Status_codes ="- 200 Success"))
-		response = make_response(jsonify(kv_key = key, kv_value =r.get(key)),200)
+	if REDIS.exists(user_key):
+		return jsonify(
+			key=user_key,
+			value=REDIS.get(user_key),
+			command=f"GET {user_key}",
+			result=True,
+			error= ""
+		), 200
 	else:
-		
-		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
-		response = make_response(jsonify(kv_key = key, kv_value = " ", result=False, error="Key does not exist"), 400, )
-	return response
-
+		return jsonify(
+			key=user_key, 
+			value=None, 
+			command=f"GET {user_key}",
+			result=False, 
+			error="Key does not exist"
+		), 404
+	
 @app.route('/keyval/<string:key>/<string:value>',methods = ['PUT'])
 def put(key, value):
 	"""
