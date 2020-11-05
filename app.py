@@ -111,7 +111,7 @@ def put():
 			error="Key does not exist, use POST to create key value pair."
 		), 404
 
-@app.route('/keyval/<string:key>',methods = ['DELETE'])
+@app.route('/keyval/<string:user_key>',methods = ['DELETE'])
 def delete(key):
 	"""
 	Remove the entries associate with the keys provided.
@@ -119,11 +119,17 @@ def delete(key):
 	:type keys: List<string>
 	:return: void
 	"""
-
-	if exists(key) is not None:
-		r.delete(key)
-		#response = make_response(jsonify(kv_key = " ", kv_value =" ",Status_codes ="- 200 Success"))
-		response = make_response(jsonify(kv_key = " ", kv_value =" "),200, )
+	
+	if REDIS.exists(payload['key']):	
+		REDIS.delete(user_key)
+		redis_val = REDIS.get(user_key)
+		return jsonify(
+			key=user_key,
+			value=redis_val.decode('unicode-escape'), #decodes the byte string to python string
+			command=f"DELETE {user_key}",
+			result=True,
+			error= ""
+		), 200
 	else:
 		
 		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
