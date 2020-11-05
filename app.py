@@ -95,7 +95,7 @@ def put():
 	
 	if REDIS.exists(payload['key']):
 		REDIS.set(payload['key'], payload['value'])
-		redis_val = REDIS.get(user_key)
+		redis_val = payload['value']
 		return jsonify(
 			key= payload['key'], 
 			value=redis_val.decode('unicode-escape'), 
