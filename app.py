@@ -132,8 +132,8 @@ def delete(user_key):
 		), 200
 	else:
 		return jsonify(
-			key= payload['key'], 
-			value = payload['value'], 
+			key=user_key, 
+			value=None, 
 			command=f"DELETE {user_key}",
 			result=False, 
 			error="Key does not exist, use POST to create key value pair."
