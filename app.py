@@ -97,19 +97,18 @@ def put():
 		return jsonify(
 			key= payload['key'], 
 			value = payload['value'], 
-			command=f"CREATE {payload['key']}/{payload['value']}",
+			command=f"UPDATE {payload['key']}/{payload['value']}",
 			result=True, 
 			error=""
 		), 200
 	else:
-		REDIS.set(payload['key'], payload['value'])
 		return jsonify(
 			key= payload['key'], 
 			value = payload['value'], 
-			command=f"CREATE {payload['key']}/{payload['value']}",
-			result=True, 
-			error=""
-		), 200
+			command=f"UPDATE {payload['key']}/{payload['value']}",
+			result=False, 
+			error="Key does not exist, use POST to create key value pair."
+		), 404
 
 @app.route('/keyval/<string:key>',methods = ['DELETE'])
 def delete(key):
