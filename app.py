@@ -121,8 +121,8 @@ def delete(user_key):
 	"""
 	
 	if REDIS.exists(user_key):	
-		REDIS.delete(user_key)
 		redis_val = REDIS.get(user_key)
+		REDIS.delete(user_key)
 		return jsonify(
 			key=user_key,
 			value=redis_val.decode('unicode-escape'), #decodes the byte string to python string
