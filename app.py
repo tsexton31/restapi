@@ -95,10 +95,9 @@ def put():
 	
 	if REDIS.exists(payload['key']):
 		REDIS.set(payload['key'], payload['value'])
-		redis_val = payload['value']
 		return jsonify(
 			key= payload['key'], 
-			value=redis_val.decode('unicode-escape'), 
+			value=payload['value'], 
 			command=f"UPDATE {payload['key']}/{payload['value']}",
 			result=True, 
 			error=""
