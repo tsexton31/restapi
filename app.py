@@ -21,8 +21,8 @@ REDIS = redis.Redis(host='redis-server')
 status_code = " "
 app = Flask(__name__)
 
-@app.route('/keyval/<string:key>/<string:value>', methods = ['POST'])
-def post(key, value):
+@app.route('/keyval', methods = ['POST'])
+def post():
 	"""
 	Insert a single entry into the database.
 	:param key: The key for the entry.
@@ -31,19 +31,27 @@ def post(key, value):
 	:return: True is the insertion was successful; False otherwise.
 	:rtype: bool
 	"""
-
-	#pst_cmd = "POST " + key + "/" + value
+	payload = request.get_json()
 	
 	
-	if REDIS.exists(key):
-		response = jsonify(kv_key = key, 
-				   kv_value = value, 
-				   result=False, 
-				   error="Key already exists"), 409
+	if REDIS.exists(payload['key']):
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=False, 
+			error="Key already exists"
+		), 409
 	else:	
-		REDIS.set(key, value)
-		response = make_response(jsonify(kv_key =key, kv_value = value, result=True),200)
-	return response
+		REDIS.set(payload['key'], payload['value'])
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=True, 
+			error=""
+		), 200
+
 
 @app.route('/keyval/<string:user_key>', methods = ['GET'])
 def get(user_key):
