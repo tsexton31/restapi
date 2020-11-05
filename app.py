@@ -7,8 +7,8 @@ import redis
 import json
 import re
 import sys
-from google.protobuf.message import Message as ProtocolBufferMessage
-import argparse
+#from google.protobuf.message import Message as ProtocolBufferMessage
+#import argparse
 #import pyslack
 #from slack import WebClient
 
