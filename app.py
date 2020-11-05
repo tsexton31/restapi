@@ -120,7 +120,7 @@ def delete(user_key):
 	:return: void
 	"""
 	
-	if REDIS.exists(payload['key']):	
+	if REDIS.exists(user_key):	
 		REDIS.delete(user_key)
 		redis_val = REDIS.get(user_key)
 		return jsonify(
