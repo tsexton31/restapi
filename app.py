@@ -112,7 +112,7 @@ def put():
 		), 404
 
 @app.route('/keyval/<string:user_key>',methods = ['DELETE'])
-def delete(key):
+def delete(user_key):
 	"""
 	Remove the entries associate with the keys provided.
 	:param keys: The keys of the entries to remove
