@@ -81,23 +81,35 @@ def get(user_key):
 			error="Key does not exist"
 		), 404
 	
-@app.route('/keyval/<string:key>/<string:value>',methods = ['PUT'])
-def put(key, value):
+@app.route('/keyval', methods = ['PUT'])
+def put():
 	"""
 	Updates the entry associated with the key with the value provided.
 	:param key: the entry's key
 	:param value: the new value of the entry
 	:return: void
 	"""
-	if exists(key) is not None:
-		r.delete(key)
-		r.set(key, value)
-		#response = make_response(jsonify(kv_key = key, kv_value = value,Status_codes ="- 200 Success"))
-		response = make_response(jsonify(kv_key = key, kv_value = value),200, )
+	
+	payload = request.get_json()
+	
+	if REDIS.exists(payload['key']):
+		REDIS.set(payload['key'], payload['value'])
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=True, 
+			error=""
+		), 200
 	else:
-		#response = make_response(jsonify(kv_key = key, kv_value = value , Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
-		response = make_response(jsonify(kv_key = key, kv_value = value),409, )
-	return response
+		REDIS.set(payload['key'], payload['value'])
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"CREATE {payload['key']}/{payload['value']}",
+			result=True, 
+			error=""
+		), 200
 
 @app.route('/keyval/<string:key>',methods = ['DELETE'])
 def delete(key):
