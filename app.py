@@ -131,10 +131,13 @@ def delete(key):
 			error= ""
 		), 200
 	else:
-		
-		#response = make_response(jsonify(kv_key = key,kv_value = " ", Status_code = "\n- 400 Invalid request(i.e., invalid JSON)\n- 404 Key does not exist"))
-		response = make_response(jsonify(kv_key = key,kv_value = " "),404 ,)
-	return response
+		return jsonify(
+			key= payload['key'], 
+			value = payload['value'], 
+			command=f"DELETE {user_key}",
+			result=False, 
+			error="Key does not exist, use POST to create key value pair."
+		), 404
 
 
 @app.route('/')
