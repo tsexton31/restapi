@@ -53,10 +53,13 @@ def get(user_key):
 	:type key: string
 	:return: entry associated with that key
 	:rtype: KeyValue"""
+	
+	
 	if REDIS.exists(user_key):
+		redis_val = REDIS.get(user_key)
 		return jsonify(
 			key=user_key,
-			value=REDIS.get(user_key),
+			value=redis_val.decode('unicode-escape'), #decodes the byte string to python string
 			command=f"GET {user_key}",
 			result=True,
 			error= ""
