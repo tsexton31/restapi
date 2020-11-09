@@ -13,9 +13,27 @@ errors = 0
 #    ]
 
 all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be populated with all endpoints and expected results
-    '/md5/test': 'f2342342k342j342lk34j2342',
+    '/md5/test': '098f6bcd4621d373cade4e832627b4f6',
+    '/md5/hello%20world': '5eb63bbbe01eeed093cb22bb8f5acdc3',
+    '/md5': '404',
+    '/factorial/4': 24,
     '/factorial/5': 120,
-    '/is-prime/3': True
+    '/factorial/test': '404',
+    '/fibonacci/0':'[0]',
+    '/fibonacci/8':'[0,1,1,2,3,5,8]',
+    '/fibonacci/35':'[0,1,1,2,3,5,8,13,21,34]',
+    '/fibonacci/1':'[0,1,1]',
+    '/fibonacci/test':'404',
+    '/is-prime/1': false,
+    '/is-prime/2': True,
+    '/is-prime/5': True,
+    '/is-prime/6': false,
+    '/is-prime/15': false,
+    '/is-prime/37': True,
+    '/is-prime/one': '404',
+    '/slack-alert/test': True,
+    '/slack-alert/this%20is%20a': True,
+    '
     }
 
 
