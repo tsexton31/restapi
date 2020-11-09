@@ -1,6 +1,6 @@
 import requests
 
-host = '34.133.4345.ip' #this host needs to be updated to our correct IP address
+host = '34.121.17.49' #this host needs to be updated to our correct IP address
 errors = 0
 
 #all_tests = [
