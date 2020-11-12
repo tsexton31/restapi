@@ -8,7 +8,7 @@ setup(
   version = '1.0',
   
   #insert whatever py file this will use
-  py_modules = [' '],
+  py_modules = ['test'],
   
   install_requires = ['Click', ],
   
