@@ -16,7 +16,7 @@ errors = 0
 all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be populated with all endpoints and expected results
     '/md5/test': '098f6bcd4621d373cade4e832627b4f6',
     '/md5/hello%20world': '5eb63bbbe01eeed093cb22bb8f5acdc3',
-    '/md5': '404',
+    '/md5': 404,
     '/factorial/4': 24,
     '/factorial/5': 120,
     '/factorial/test': '404',
