@@ -60,5 +60,13 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
         else:
             print("ERROR")
             errors += 1
+            
+    else:        
+        if t.json()['output'] == result:
+            print("YES")
+        else:
+            print("ERROR")
+            errors += 1
         
+    
 print(f"Errors = {errors}")
