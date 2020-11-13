@@ -79,7 +79,7 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
     
               
 for path, result in keyval_tests_dict.items(): #post
-    print(f"Path: {path} / json payload {result}")
+    print(f"Path: {path} / Method: POST / json payload {result}")
     t = requests.post(f'http://{host}{path}', json=result)
     print(t.status_code)
     if t.status_code == 200:
@@ -91,7 +91,7 @@ for path, result in keyval_tests_dict.items(): #post
 
               
 for path, result in keyval_tests_dict.items(): #GET
-    print(f"Path: {path} / json payload {result}")
+    print(f"Path: {path} / Method: GET / json payload {result}")
     t = requests.get(f'http://{host}{path}/test1') #hardcoded get string. Could string splice my Dict key to extract the key string
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
@@ -100,9 +100,9 @@ for path, result in keyval_tests_dict.items(): #GET
         print("ERROR\n")
         errors += 1       
               
-for path, result in keyval_tests_dict.items(): #POST
-    print(f"Path: {path} / json payload 'key':'test1', 'value':'something'")
-    t = requests.post(f'http://{host}{path}', json={'key':'test1', 'value':'something'})
+for path, result in keyval_tests_dict.items(): #PUT
+    print(f"Path: {path} / Method: PUT / json payload 'key':'test1', 'value':'something'")
+    t = requests.put(f'http://{host}{path}', json={'key':'test1', 'value':'something'})
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
         print("PASS\n")
@@ -111,8 +111,8 @@ for path, result in keyval_tests_dict.items(): #POST
         errors += 1       
               
 for path, result in keyval_tests_dict.items(): #DELETE
-    print(f"Path: {path} / json payload 'key':'test1', 'value':'something'")
-    t = requests.post(f'http://{host}{path}/test1')
+    print(f"Path: {path} / Method: DELETE / json payload 'key':'test1', 'value':'something'")
+    t = requests.delete(f'http://{host}{path}/test1')
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
         print("PASS\n")
