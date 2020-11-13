@@ -12,15 +12,15 @@ import sys
 
 
 @click.command()
-@click.group(chain=True)
-@click.pass_context
+@click.group(chain=True)	#Group every function together. 'chain=true' allows for multiple commands to be chained together
+@click.pass_context		#Passes the value to every command with this under it
 @click.option('--cli', default= '',
               help= 'Command Line Interface')
 def cli(user_key):
   pass:
   
   
-@cli.command('md5')
+@cli.command('md5')		#This is 'cli.command(...)' because it is grouped with cli
 @click.pass_context
 @click.option('--md5', default= 'hello',
               help= 'md5 command')
@@ -28,7 +28,7 @@ def MD5(word):
   hash_obj = hashlib.md5(word.encode())
   return jsonify(input=word, output=hash_obj.hexdigest())
 
-@cli.command('factorial')
+@cli.command('factorial')	#This is 'cli.command(...)' because it is grouped with cli
 @click.pass_context
 @click.option('--factorial', default= '1',
               help= 'factorial test')
@@ -46,7 +46,7 @@ def IsFactorial(n):
 		return jsonify(input=n, output=factorial)
 
   
-@cli.command('fibonacci')
+@cli.command('fibonacci')	
 @click.pass_context
 @click.option('--fibonacci', default= '1',
               help= 'fibonacci test')
@@ -117,7 +117,7 @@ def post_to_slack(msg):
 
 
 
-@cli.command('post')
+@cli.command('post')	#This may need to be changed to '-keyval-post' or 'post keyval' or 'post-keyval'. Not sure on its format
 @click.option('--post', default= '',
               help= 'post test')
 def post():
@@ -152,7 +152,7 @@ def post():
 		), 200
 
 
-@cli.command('put')
+@cli.command('put')	#This may need to be changed to '-keyval-put' or 'put keyval' or 'put-keyval'. Not sure on its format
 @click.pass_context
 @click.option('--get', default= '',
               help= 'get test')
@@ -253,4 +253,4 @@ def delete(user_key):
   #Should run like the OG code, just with a few minor changes here and there to accomodate arguments
   
 if __name__ == '__main__':
-  cli()
+  cli() #I am not sure if there needs to be something in the () in order to successfully pass arguments
