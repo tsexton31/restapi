@@ -19,7 +19,7 @@ def cli():
 def md5(phrase):
     """This will translate a given phrase to md5"""
     t = requests.get(f'http://{host}/md5/{phrase}')
-    click.echo('This is the md5 encrytion for %s:' % phrase)
+    click.echo('This is the md5 encryption for %s:' % phrase)
     click.echo(t.json()['output'])
     pass
 #####
@@ -46,7 +46,7 @@ def factorial(number):
 def fibonacci(number):
     """This will return the fibonacci sequence of a number"""
     t = requests.get(f'http://{host}/fibonacci/{number}')
-    click.echo('This is the fiboonacci sequence for %d:' % number)
+    click.echo('This is the fibonacci sequence for %d:' % number)
     click.echo(t.json()['output'])
     pass
 #######
@@ -116,7 +116,7 @@ def put(put):
 @click.option('--user_key', default= '',
               help= 'delete test')
 def delete(user_key):
-    """Remove the entries associate with the keys provided."""
+    """Remove the entries associated with the keys provided."""
     pass
 ######
 
