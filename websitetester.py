@@ -62,7 +62,7 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
             print("ERROR\n")
             errors += 1
             
-    else if t.status_code == 404:
+    elif t.status_code == 404:
         
         if result == 404:
             print("PASS\n")
