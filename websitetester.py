@@ -19,19 +19,19 @@ all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be popul
     '/md5': 404,
     '/factorial/4': 24,
     '/factorial/5': 120,
-    '/factorial/test': '404',
+    '/factorial/test': 404,
     '/fibonacci/0':[0],
     '/fibonacci/8':[0,1,1,2,3,5,8],
     '/fibonacci/35':[0,1,1,2,3,5,8,13,21,34],
     '/fibonacci/1':[0,1,1],
-    '/fibonacci/test':'404',
+    '/fibonacci/test': 404,
     '/is-prime/1': False,
     '/is-prime/2': True,
     '/is-prime/5': True,
     '/is-prime/6': False,
     '/is-prime/15': False,
     '/is-prime/37': True,
-    '/is-prime/one': '404',
+    '/is-prime/one': 404,
     '/slack-alert/test': True,
     '/slack-alert/this%20is%20a': True
     }
@@ -58,13 +58,13 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
         if t.json()['output'] == result:
             print("YES\n")
         else:
-            print("ERROR")
+            print("ERROR\n")
             errors += 1
             
     if t.status_code == 404:
         
         if result == 404:
-            print("YES")
+            print("YES\n")
         else:
             print("ERROR")
             errors += 1
