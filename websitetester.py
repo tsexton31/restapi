@@ -55,9 +55,9 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
     print(f"Path: {path} / EXPECTED RESULT: {result}")
     t = requests.get(f'http://{host}{path}')
     if t.status_code == 200:
-        print(t.json()['output'])
+        print(f"Actual Result {t.json()['output']}")
         if t.json()['output'] == result:
-            print("YES\n")
+            print("PASS\n")
         else:
             print("ERROR\n")
             errors += 1
@@ -65,7 +65,7 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
     if t.status_code == 404:
         
         if result == 404:
-            print("YES\n")
+            print("PASS\n")
         else:
             print("ERROR")
             errors += 1
