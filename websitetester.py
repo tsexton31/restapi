@@ -80,13 +80,26 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
               
 for path, result in keyval_tests_dict.items(): #post
     print(f"Path: {path} / json payload {result}")
-    t = requests.post(f'http://{host}/keyval', json=result)
+    t = requests.post(f'http://{host}{path}', json=result)
     print(t.status_code)
     if t.status_code == 200:
         print("PASS\n")
     else:
         print("ERROR\n")
         errors += 1
+ 
+
+              
+for path, result in keyval_tests_dict.items(): #GET
+    print(f"Path: {path} / json payload {result}")
+    t = requests.get(f'http://{host}{path}/test1) #hardcoded get string. Could string splice my Dict key to extract the key string
+    print(f"Status code: {t.status_code}")
+    if t.status_code == 200:
+        print("PASS\n")
+    else:
+        print("ERROR\n")
+        errors += 1       
+              
               
 #for path, result in keyval_tests_dict.items():
 #    print(f"Path: {path} / EXPECTED RESULT: {result}")
