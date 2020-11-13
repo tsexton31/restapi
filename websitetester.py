@@ -35,6 +35,12 @@ all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be popul
     '/slack-alert/test': True,
     '/slack-alert/this%20is%20a': True
     }
+keyval_tests_dict = {
+    '/keyval/test1' : True,
+    '/keyval/test1' : False,
+    '/keyval/test2' : True
+    
+    }
 
 
 #test = requests.get(f'http://{host}/md5/test')  #manual and worst way
@@ -67,10 +73,36 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
         if result == 404:
             print("PASS\n")
         else:
-            print("ERROR")
+            print("ERROR\n")
             errors += 1
     else:
-            print("ERROR")
+            print("ERROR\n")
             errors += 1
     
+              
+for path, result in keyval_tests_dict.items():
+    print(f"Path: {path} / EXPECTED RESULT: {result}")
+    t = requests.post(f'http://{host}{path}')
+    if t.json()['result'] == result:
+        print("PASS\n")
+    else:
+        print("ERROR\n")
+        errors += 1
+              
+for path, result in keyval_tests_dict.items():
+    print(f"Path: {path} / EXPECTED RESULT: {result}")
+    t = requests.get(f'http://{host}{path}')
+    if t.json()['result'] == result:
+        print("PASS\n")
+    else:
+        print("ERROR\n")
+        errors += 1              
+for path, result in keyval_tests_dict.items():
+    print(f"Path: {path} / EXPECTED RESULT: {result}")
+    t = requests.delete(f'http://{host}{path}')
+    if t.json()['result'] == result:
+        print("PASS\n")
+    else:
+        print("ERROR\n")
+        errors += 1    
 print(f"Errors = {errors}")
