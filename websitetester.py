@@ -100,7 +100,7 @@ for path, result in keyval_tests_dict.items(): #GET
         print("ERROR\n")
         errors += 1       
               
- for path, result in keyval_tests_dict.items(): #POST
+for path, result in keyval_tests_dict.items(): #POST
     print(f"Path: {path} / json payload {'key':'test1', 'value':'something'}")
     t = requests.post(f'http://{host}{path}', json={'key':'test1', 'value':'something'})
     print(f"Status code: {t.status_code}")
@@ -110,7 +110,7 @@ for path, result in keyval_tests_dict.items(): #GET
         print("ERROR\n")
         errors += 1       
               
- for path, result in keyval_tests_dict.items(): #DELETE
+for path, result in keyval_tests_dict.items(): #DELETE
     print(f"Path: {path} / json payload {'key':'test1', 'value':'something'}")
     t = requests.post(f'http://{host}{path}/test1')
     print(f"Status code: {t.status_code}")
