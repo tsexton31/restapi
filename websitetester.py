@@ -81,27 +81,22 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
 for path, result in keyval_tests_dict.items(): #post
     print(f"Path: {path} / json payload {result}")
     t = requests.post(f'http://{host}', json=result)
+    print(t.status_code)
     if t.status_code == 200:
         print("PASS\n")
     else:
         print("ERROR\n")
         errors += 1
               
-for path, result in keyval_tests_dict.items():
-    print(f"Path: {path} / EXPECTED RESULT: {result}")
-    t = requests.get(f'http://{host}{path}')
-    if t.json()['result'] == result:
-        print("PASS\n")
-    else:
-        print("ERROR\n")
-        errors += 1              
-for path, result in keyval_tests_dict.items():
-    print(f"Path: {path} / EXPECTED RESULT: {result}")
-    t = requests.delete(f'http://{host}{path}')
-    if t.json()['result'] == result:
-        print("PASS\n")
-    else:
-        print("ERROR\n")
-        errors += 1    
+#for path, result in keyval_tests_dict.items():
+#    print(f"Path: {path} / EXPECTED RESULT: {result}")
+#    t = requests.get(f'http://{host}{path}')
+#    if t.json()['result'] == result:
+#        print("PASS\n")
+#    else:
+#        print("ERROR\n")
+#        errors += 1     
+              
+
               
 print(f"Errors = {errors}")
