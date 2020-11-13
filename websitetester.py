@@ -36,9 +36,7 @@ all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be popul
     '/slack-alert/this%20is%20a': True
     }
 keyval_tests_dict = {
-    '/keyval/test1' : True,
-    '/keyval/test1' : False,
-    '/keyval/test2' : True
+    '/keyval' : {'key'='test1', 'value'='1'}
     
     }
 
@@ -80,10 +78,10 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
             errors += 1
     
               
-for path, result in keyval_tests_dict.items():
-    print(f"Path: {path} / EXPECTED RESULT: {result}")
-    t = requests.post(f'http://{host}{path}')
-    if t.json()['result'] == result:
+for path, result in keyval_tests_dict.items(): #post
+    print(f"Path: {path} / json payload {result}")
+    t = requests.post(f'http://{host}', json=result)
+    if t.status_code == 200:
         print("PASS\n")
     else:
         print("ERROR\n")
@@ -105,4 +103,5 @@ for path, result in keyval_tests_dict.items():
     else:
         print("ERROR\n")
         errors += 1    
+              
 print(f"Errors = {errors}")
