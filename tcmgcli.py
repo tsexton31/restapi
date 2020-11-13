@@ -30,7 +30,7 @@ def md5(phrase):
               help= 'The number to find factorials of')
 @click.argument('number')
 def factorial(number):
-    """This will calcuate the factorial of a number"""
+    """This will calculate the factorial of a number"""
     t = requests.get(f'http://{host}/factorial/{number}')
     click.echo('This is the factorial for %d:' % number)
     click.echo(t.json()['output'])
@@ -71,7 +71,7 @@ def is_prime(number):
               help= 'The message to send in slack')
 @click.argument('message')
 def slack_alert(message):
-    """This will send a slack alert and tell you if it sent sucessfully"""
+    """This will send a slack alert and tell you if it sent successfully"""
     t = requests.get(f'http://{host}/slack-alert/{message}')
     print(t.json()['output'])
     pass
