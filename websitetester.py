@@ -36,7 +36,7 @@ all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be popul
     '/slack-alert/this%20is%20a': True
     }
 keyval_tests_dict = {
-    '/keyval' : {'key'='test1', 'value'='1'}
+    '/keyval' : {'key':'test1', 'value':'1'}
     
     }
 
