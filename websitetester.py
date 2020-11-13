@@ -61,7 +61,7 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
             print("ERROR")
             errors += 1
             
-    if t.status_code == '404'
+    if t.status_code == '404':
         print(t.json())
         if t.json() == result:
             print("YES")
