@@ -52,9 +52,10 @@ all_tests_dict = {  #IF U NEED SOMETHING TO DO: this dictonary needs to be popul
         
         
 for path, result in all_tests_dict.items(): #using a dict, best but most complicated way
-    print(f"Path: {path} / RESULT: {result}")
+    print(f"Path: {path} / EXPECTED RESULT: {result}")
     t = requests.get(f'http://{host}{path}')
-    if t.status_code == 200:        
+    if t.status_code == 200:
+        print(t.json()['output'])
         if t.json()['output'] == result:
             print("YES\n")
         else:
