@@ -15,7 +15,7 @@ import sys
 @click.group(chain=True)
 @click.pass_context
 @click.option('--cli', default= '',
-              help= 'CRUD Function')
+              help= 'Command Line Interface')
 def cli(user_key):
   pass:
   
