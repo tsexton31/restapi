@@ -80,7 +80,7 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
               
 for path, result in keyval_tests_dict.items(): #post
     print(f"Path: {path} / json payload {result}")
-    t = requests.(f'http://{host}/keyval', json=result)
+    t = requests.post(f'http://{host}/keyval', json=result)
     print(t.status_code)
     if t.status_code == 200:
         print("PASS\n")
