@@ -56,12 +56,12 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
     t = requests.get(f'http://{host}{path}')
     if t.status_code == 200:        
         if t.json()['output'] == result:
-            print("YES")
+            print("YES\n")
         else:
             print("ERROR")
             errors += 1
             
-    if t.status_code == '404':
+    if t.status_code == 404:
         print(t.json())
         if t.json() == result:
             print("YES")
