@@ -101,7 +101,7 @@ for path, result in keyval_tests_dict.items(): #GET
         errors += 1       
               
 for path, result in keyval_tests_dict.items(): #POST
-    print(f"Path: {path} / json payload {'key':'test1', 'value':'something'}")
+    print(f"Path: {path} / json payload 'key':'test1', 'value':'something'")
     t = requests.post(f'http://{host}{path}', json={'key':'test1', 'value':'something'})
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
@@ -111,7 +111,7 @@ for path, result in keyval_tests_dict.items(): #POST
         errors += 1       
               
 for path, result in keyval_tests_dict.items(): #DELETE
-    print(f"Path: {path} / json payload {'key':'test1', 'value':'something'}")
+    print(f"Path: {path} / json payload 'key':'test1', 'value':'something'")
     t = requests.post(f'http://{host}{path}/test1')
     print(f"Status code: {t.status_code}")
     if t.status_code == 200:
