@@ -70,7 +70,6 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
             print("ERROR")
             errors += 1
     else:
-        else:
             print("ERROR")
             errors += 1
     
