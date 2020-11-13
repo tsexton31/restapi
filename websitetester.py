@@ -55,20 +55,23 @@ for path, result in all_tests_dict.items(): #using a dict, best but most complic
     print(f"Path: {path} / EXPECTED RESULT: {result}")
     t = requests.get(f'http://{host}{path}')
     if t.status_code == 200:
-        print(f"Actual Result {t.json()['output']}")
+        print(f"Actual Result: {t.json()['output']}")
         if t.json()['output'] == result:
             print("PASS\n")
         else:
             print("ERROR\n")
             errors += 1
             
-    if t.status_code == 404:
+    else if t.status_code == 404:
         
         if result == 404:
             print("PASS\n")
         else:
             print("ERROR")
             errors += 1
-        
+    else:
+        else:
+            print("ERROR")
+            errors += 1
     
 print(f"Errors = {errors}")
