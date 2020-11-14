@@ -93,10 +93,17 @@ def post(post):
 
 
 @cli.command()
-@click.option('--get', default= '',
-              help= 'get test')
-def get(user_key):
+@click.option('--string', default='',
+              help='get test')
+@click.argument('string')
+def get(string):
     """Returns the entry associated with the key"""
+    t = requests.get(f'http://{host}/keyval/{string}')
+    click.echo('GET %s:' % string)
+    if t.json()['result'] is True:
+        print(t.json()['value'])
+    else:
+        print(t.json()['error'])
     pass
 #####
 
