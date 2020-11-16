@@ -84,7 +84,7 @@ def slack_alert(message):
               help= 'post test')
 @click.argument('usr_key')
 @click.argument('usr_value')
-def post(usr_key, usr_value):
+def POST(usr_key, usr_value):
     """Insert a single entry into the database"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
     result = {'key':usr_key, 'value':usr_value}
