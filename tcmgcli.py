@@ -80,11 +80,11 @@ def slack_alert(message):
 
 
 @cli.command()
-@click.option('--null', default= '',
-              help= 'post test')
+#@click.option('--null', default= '',
+#              help= 'post test')
 @click.argument('usr_key')
 @click.argument('usr_value')
-def POST(usr_key, usr_value):
+def post(usr_key, usr_value):
     """Insert a single entry into the database"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
     result = {'key':usr_key, 'value':usr_value}
@@ -96,7 +96,7 @@ def POST(usr_key, usr_value):
 ####
 
 
-
+#GET
 @cli.command()
 @click.option('--string', default='',
               help='get test')
@@ -113,12 +113,22 @@ def get(string):
 #####
 
 
-
+#put
 @cli.command()
 @click.option('--put', default= '',
               help= 'put test')
-def put(put):
+@click.argument('usr_key')
+@click.argument('usr_value')
+
+def put(usr_key, usr_value):
     """Updates the entry associated with the key with the value provided"""
+    #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
+   
+    result = {'key':usr_key, 'value':usr_value}
+    t = requests.put(f'http://{host}/keyval', json=result)
+    print(t.json()['command'])
+    print(t.json()['result'])
+    print(t.json()['error'])
     pass
 #####
 
