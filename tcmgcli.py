@@ -88,7 +88,7 @@ def create(usr_key, usr_value):
     """Insert a single entry into the database"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
     result = {'key':usr_key, 'value':usr_value}
-    t = requests.post(f'http://{host}/keyval', json=result)
+    t = requests.create(f'http://{host}/keyval', json=result)
     print(t.json()['command'])
     print(t.json()['result'])
     print(t.json()['error'])
@@ -103,7 +103,7 @@ def create(usr_key, usr_value):
 @click.argument('string')
 def read(string):
     """Returns the entry associated with the key"""
-    t = requests.get(f'http://{host}/keyval/{string}')
+    t = requests.read(f'http://{host}/keyval/{string}')
     click.echo('GET %s:' % string)
     if t.json()['result'] is True:
         print(t.json()['value'])
@@ -118,14 +118,14 @@ def read(string):
 
 @click.argument('usr_key')
 @click.argument('usr_value')
-@click.option('--string', default='',
-              help='read test')
+#@click.option('--string', default='',
+#              help='read test')
 def update(usr_key, usr_value):
     """Updates the entry associated with the key with the value provided"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
    
     result = {'key':usr_key, 'value':usr_value}
-    t = requests.put(f'http://{host}/keyval', json=result)
+    t = requests.update(f'http://{host}/keyval', json=result)
     print(t.json()['command'])
     print(t.json()['result'])
     print(t.json()['error'])
