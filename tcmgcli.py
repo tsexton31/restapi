@@ -139,7 +139,7 @@ def put(usr_key, usr_value):
 @click.argument('user_key')
 def delete(user_key):
     """Remove the entries associated with the keys provided."""
-    t = requests.get(f'http://{host}/keyval/{user_key}')
+    t = requests.delete(f'http://{host}/keyval/{user_key}')
     click.echo('DELETE %s:' % user_key)
     print(t.json()['command'])
     print(t.json()['result'])
