@@ -21,8 +21,8 @@ REDIS = redis.Redis(host='redis-server') #think this name needs to be in the doc
 status_code = " "
 app = Flask(__name__)
 
-@app.route('/keyval', methods = ['POST'])
-def post():
+@app.route('/keyval', methods = ['CREATE'])
+def create():
 	"""
 	Insert a single entry into the database.
 	:param key: The key for the entry.
@@ -54,8 +54,8 @@ def post():
 		), 200
 
 
-@app.route('/keyval/<string:user_key>', methods = ['GET'])
-def get(user_key):
+@app.route('/keyval/<string:user_key>', methods = ['READ'])
+def read(user_key):
 	"""
 	Returns the entry associated with the key.
 	:param key: the key of the entry to be retrieved from the database
@@ -82,8 +82,8 @@ def get(user_key):
 			error="Key does not exist"
 		), 404
 	
-@app.route('/keyval', methods = ['PUT'])
-def put():
+@app.route('/keyval', methods = ['UPDATE'])
+def update():
 	"""
 	Updates the entry associated with the key with the value provided.
 	:param key: the entry's key
