@@ -80,8 +80,8 @@ def slack_alert(message):
 
 
 @cli.command()
-#@click.option('--post', default= '',
-#              help= 'post test')
+@click.option('--null', default= '',
+              help= 'post test')
 @click.argument('usr_key')
 @click.argument('usr_value')
 def POST(usr_key, usr_value):
