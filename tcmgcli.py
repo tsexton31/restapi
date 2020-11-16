@@ -86,7 +86,7 @@ def slack_alert(message):
 def post():
     """Insert a single entry into the database"""
     usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
-    result = {'key'=usr_key, 'value'=usr_value}
+    result = {'key':usr_key, 'value':usr_value}
     t = requests.post(f'http://{host}/keyval', json=result)
     print(t.json()['command'])
     print(t.json()['result'])
