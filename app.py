@@ -207,7 +207,7 @@ def fibonacci_num(n):
 
 @app.route('/slack-alert/<string:msg>')
 def post_to_slack(msg):
-	SLACK_URL = 'https://hooks.slack.com/services/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'
+	SLACK_URL = 'https://hooks.slack.com/services/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'
 	# build the dictionary that will be used as the json payload
 	data = { 'text': msg }
 	# make an HTTP request using POST to the Slack URL
