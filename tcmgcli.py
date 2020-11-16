@@ -88,7 +88,7 @@ def create(usr_key, usr_value):
     """Insert a single entry into the database"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
     result = {'key':usr_key, 'value':usr_value}
-    t = requests.create(f'http://{host}/keyval', json=result)
+    t = requests.post(f'http://{host}/keyval', json=result)
     print(t.json()['command'])
     print(t.json()['result'])
     print(t.json()['error'])
@@ -123,7 +123,7 @@ def update(usr_key, usr_value):
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
    
     result = {'key':usr_key, 'value':usr_value}
-    t = requests.update(f'http://{host}/keyval', json=result)
+    t = requests.put(f'http://{host}/keyval', json=result)
     print(t.json()['command'])
     print(t.json()['result'])
     print(t.json()['error'])
