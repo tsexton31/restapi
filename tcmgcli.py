@@ -103,8 +103,8 @@ def create(usr_key, usr_value):
 @click.argument('string')
 def read(string):
     """Returns the entry associated with the key"""
-    t = requests.read(f'http://{host}/keyval/{string}')
-    click.echo('GET %s:' % string)
+    t = requests.get(f'http://{host}/keyval/{string}')
+    click.echo('READ %s:' % string)
     if t.json()['result'] is True:
         print(t.json()['value'])
     else:
