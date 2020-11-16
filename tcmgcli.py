@@ -5,7 +5,7 @@ app = Flask(__name__)
 host = '34.121.17.49' #this host needs to be updated to our correct IP address
 errors = 0
 import click
-
+import json
 
 @click.group()
 def cli():
