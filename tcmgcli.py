@@ -136,6 +136,7 @@ def put(usr_key, usr_value):
 @cli.command()
 @click.option('--user_key', default= '',
               help= 'delete test')
+@click.argument('user_key')
 def delete(user_key):
     """Remove the entries associated with the keys provided."""
     t = requests.get(f'http://{host}/keyval/{user_key}')
