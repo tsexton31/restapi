@@ -115,8 +115,7 @@ def get(string):
 
 #put
 @cli.command()
-@click.option('--put', default= '',
-              help= 'put test')
+
 @click.argument('usr_key')
 @click.argument('usr_value')
 
