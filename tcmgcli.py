@@ -82,11 +82,15 @@ def slack_alert(message):
 @cli.command()
 @click.option('--post', default= '',
               help= 'post test')
-@click.argument('post')
-def post(post):
+
+def post():
     """Insert a single entry into the database"""
-    t = requests.get(f'http://{host} POST /keyval/{post}')
-    print(t.json()['output'])
+    usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
+    result = {'key'=usr_key, 'value'=usr_value}
+    t = requests.post(f'http://{host}/keyval', json=result)
+    print(t.json()['command'])
+    print(t.json()['result'])
+    print(t.json()['error'])
     pass
 ####
 
