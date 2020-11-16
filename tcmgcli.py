@@ -81,10 +81,10 @@ def slack_alert(message):
 
 @cli.command()
 #@click.option('--null', default= '',
-#              help= 'post test')
+#              help= 'create test')
 @click.argument('usr_key')
 @click.argument('usr_value')
-def post(usr_key, usr_value):
+def create(usr_key, usr_value):
     """Insert a single entry into the database"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
     result = {'key':usr_key, 'value':usr_value}
@@ -98,10 +98,10 @@ def post(usr_key, usr_value):
 
 #GET
 @cli.command()
-@click.option('--string', default='',
-              help='get test')
+#@click.option('--string', default='',
+#              help='read test')
 @click.argument('string')
-def get(string):
+def read(string):
     """Returns the entry associated with the key"""
     t = requests.get(f'http://{host}/keyval/{string}')
     click.echo('GET %s:' % string)
@@ -118,8 +118,9 @@ def get(string):
 
 @click.argument('usr_key')
 @click.argument('usr_value')
-
-def put(usr_key, usr_value):
+@click.option('--string', default='',
+              help='read test')
+def update(usr_key, usr_value):
     """Updates the entry associated with the key with the value provided"""
     #usr_key, usr_value = input("Enter a key followed by its value in the format of: key, value: ").split(", ")
    
