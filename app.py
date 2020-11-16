@@ -17,7 +17,7 @@ import sys
 
 
 
-REDIS = redis.Redis(host='redis-server')
+REDIS = redis.Redis(host='redis-server') #think this name needs to be in the docker_compose file
 status_code = " "
 app = Flask(__name__)
 
