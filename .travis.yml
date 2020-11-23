@@ -1,7 +1,19 @@
-language: Python
+language: python
 
 services:
   - docker
   
 
 before_install:
+  - docker build -t tsexton31/restapi .
+  - cd /restapi
+  # possibly do what a docker compose file would
+  #maybe docker run -it -p 80:80 --network redisnet tsexton31/restapi
+  - docker ps
+  
+script:
+  - docker run tsexton31/websitetest:v1
+  
+after_success:
+  - docker login -u $D_USERNAME -p $D_PASSWORD
+  - docker push tsexton31/restapi
