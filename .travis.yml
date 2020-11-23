@@ -11,8 +11,8 @@ before_install:
 
   - docker network create redisnet
   - docker ps
-  - docker run --name redis --network redisnet redis
-  - docker run -p 80:80 --network redisnet tsexton31/restapi
+  - docker run -d --name redis --network redisnet redis
+  - docker run -d -p 80:80 --network redisnet tsexton31/restapi
   #ensure ports are correct
   
 script:
