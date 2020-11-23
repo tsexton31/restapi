@@ -1,7 +1,7 @@
 import requests
 import json
 from flask import Flask, jsonify, escape, request, Response
-host = '34.121.17.49' #this host needs to be updated to our correct IP address
+host = 'localhost' #this host needs to be updated to our correct IP address
 errors = 0
 
 #all_tests = [
