@@ -9,7 +9,7 @@ before_install:
   
   # possibly do what a docker compose file would
   #maybe docker run -it -p 80:80 --network redisnet tsexton31/restapi
-  - docker run -it -rm -p 80:80 --network redisnet tsexton31/restapi
+  - docker run -it -p 80:80 --network redisnet tsexton31/restapi
   - docker ps
   
 script:
